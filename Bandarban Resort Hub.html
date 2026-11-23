@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bandarban Resort Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--green:#183D32;--bg:#F8F7F2;--sage:#DCE8DE;--ink:#303833;--card:#fff;--line:#d9ddd5;--mute:#5d685f;--warn:#b4472f;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--green:#8fc4a8;--bg:#121a16;--sage:#1f2e26;--ink:#e6ebe6;--card:#1a251f;--line:#2e3d35;--mute:#9bab9f;--warn:#e58b72}}
+:root[data-theme="dark"]{--green:#8fc4a8;--bg:#121a16;--sage:#1f2e26;--ink:#e6ebe6;--card:#1a251f;--line:#2e3d35;--mute:#9bab9f;--warn:#e58b72}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 "Public Sans",system-ui,sans-serif}
+h1,h2,h3{font-family:Fraunces,Georgia,serif;line-height:1.2;margin:0 0 .5em}
+h1{font-size:clamp(2rem,5vw,3.4rem)}h2{font-size:1.7rem}h3{font-size:1.2rem}
+button,input,select{font:inherit;color:inherit}
+a{color:inherit}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:1px solid var(--line)}
+nav{display:flex;align-items:center;gap:6px;padding:12px 0;flex-wrap:wrap}
+.logo{font-family:Fraunces,serif;font-weight:700;font-size:1.2rem;color:var(--green);margin-right:auto;background:none;border:0;cursor:pointer}
+nav button.l{background:none;border:0;padding:8px 12px;border-radius:8px;cursor:pointer}
+nav button.l[aria-current=true]{background:var(--sage);font-weight:600}
+.btn{background:var(--green);color:var(--bg);border:0;padding:11px 20px;border-radius:10px;font-weight:600;cursor:pointer}
+.btn.alt{background:transparent;color:var(--green);border:1.5px solid var(--green)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+:focus-visible{outline:3px solid #4a9a78;outline-offset:2px}
+.hero{background:linear-gradient(180deg,#183D32 0%,#2c5a49 70%,#3b6f5a 100%);color:#F8F7F2;position:relative;overflow:hidden;padding:72px 0 120px}
+.hero svg{position:absolute;bottom:-1px;left:0;width:100%;height:150px}
+.hero p{max-width:52ch;opacity:.9;font-size:1.1rem}
+.search{position:relative;z-index:2;margin-top:-70px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;align-items:end}
+label{display:grid;gap:4px;font-size:.85rem;color:var(--mute)}
+input,select{padding:10px;border:1px solid var(--line);border-radius:8px;background:var(--bg)}
+section{padding:44px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
+.card .body{padding:16px;display:flex;flex-direction:column;gap:8px;flex:1}
+.ph{height:150px;position:relative}
+.ph svg{width:100%;height:100%;display:block}
+.tag{display:inline-block;background:var(--sage);color:var(--green);font-size:.78rem;padding:2px 10px;border-radius:99px;font-weight:600}
+.price{font-weight:600;color:var(--green)}
+.row{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chips span{font-size:.8rem;border:1px solid var(--line);border-radius:6px;padding:1px 8px;color:var(--mute)}
+.cats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.cat{background:var(--sage);border:2px solid transparent;border-radius:12px;padding:16px;text-align:left;cursor:pointer}
+.cat[aria-pressed=true]{border-color:var(--green)}
+.cat b{display:block;font-family:Fraunces,serif;font-size:1.1rem}
+.layout{display:grid;grid-template-columns:230px 1fr;gap:28px}
+@media(max-width:760px){.layout{grid-template-columns:1fr}}
+.filters{display:grid;gap:14px;align-content:start}
+.filters .chk{display:flex;gap:8px;align-items:center;color:var(--ink);font-size:.95rem}
+.fav{background:none;border:0;cursor:pointer;font-size:1.3rem;position:absolute;top:8px;right:10px;color:#fff}
+.tablewrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:520px;background:var(--card)}
+th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{background:var(--sage);color:var(--green)}
+.modal{position:fixed;inset:0;background:rgba(10,20,15,.6);display:none;align-items:center;justify-content:center;padding:16px;z-index:50}
+.modal.on{display:flex}
+.sheet{background:var(--bg);border-radius:16px;max-width:520px;width:100%;max-height:92vh;overflow:auto;padding:24px;display:grid;gap:12px}
+.sum{background:var(--sage);border-radius:10px;padding:14px;display:grid;gap:4px}
+.sum .row{font-size:.95rem}
+.warn{color:var(--warn)}
+.compare-bar{position:fixed;left:0;right:0;bottom:0;background:var(--green);color:var(--bg);padding:12px 20px calc(12px + env(safe-area-inset-bottom,0px));display:none;z-index:30}
+.compare-bar.on{display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap}
+.compare-bar .btn{background:var(--bg);color:var(--green)}
+.tabs{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap}
+.tabs button{padding:8px 16px;border-radius:99px;border:1px solid var(--line);background:var(--card);cursor:pointer}
+.tabs button[aria-pressed=true]{background:var(--green);color:var(--bg)}
+footer{background:var(--green);color:#F8F7F2;padding:34px 0;margin-top:40px}
+footer .wrap{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px}
+footer h3{color:#F8F7F2}footer p{margin:.2em 0;opacity:.85}
+.toast{position:fixed;top:calc(70px + env(safe-area-inset-top,0px));left:50%;transform:translateX(-50%);background:var(--green);color:var(--bg);padding:10px 18px;border-radius:10px;z-index:60;display:none}
+.muted{color:var(--mute)}
+@media(prefers-reduced-motion:no-preference){.card{transition:transform .15s}.card:hover{transform:translateY(-3px)}}
+</style>
+</head>
+<body>
+<header><div class="wrap"><nav aria-label="Main">
+<button class="logo" data-go="home">Bandarban Resort Hub</button>
+<button class="l" data-go="explore">Explore Resorts</button>
+<button class="l" data-go="compare">Compare</button>
+<button class="l" data-go="dash">Dashboards</button>
+<button class="l" data-go="about">About &amp; Contact</button>
+<button class="btn" data-go="explore">Book a stay</button>
+</nav></div></header>
+<main id="app"></main>
+<div class="compare-bar" id="cbar"><span id="ccount"></span><button class="btn" data-go="compare">Compare now</button><button class="btn alt" style="color:#F8F7F2;border-color:#F8F7F2" id="cclear">Clear</button></div>
+<div class="modal" id="modal" role="dialog" aria-modal="true"><div class="sheet" id="sheet"></div></div>
+<div class="toast" id="toast" role="status"></div>
+<footer><div class="wrap">
+<div><h3>Bandarban Resort Hub</h3><p>Find, compare and book your Bandarban resort in one place.</p></div>
+<div><h3>Contact</h3><p>hello@bandarbanresorthub.example</p><p>+880 1X-XXXX-XXXX</p></div>
+<div><h3>Resort owners</h3><p>List your resort and manage rooms, prices and availability.</p></div>
+</div></footer>
+
+<script>
+const BDT=n=>"৳"+n.toLocaleString("en-US");
+const FAC=["Wi-Fi","Restaurant","Parking","Bonfire","Pool","Trekking guide"];
+// Sample data only. Replace with API data from your backend.
+const R=[
+{id:1,name:"Meghla Hill View",loc:"Nilgiri Road",from:2200,rating:4.3,rev:128,hue:150,fac:["Wi-Fi","Restaurant","Parking"],food:"Breakfast included",cancel:"20% fee, free before 7 days",rooms:[["Standard Room",2200,2],["Balcony Room",3200,3]]},
+{id:2,name:"Sangu Riverside Retreat",loc:"Sangu River",from:3800,rating:4.5,rev:96,hue:170,fac:["Wi-Fi","Restaurant","Bonfire","Parking"],food:"All meals available",cancel:"20% fee",rooms:[["Riverside Cottage",3800,2],["Family Cottage",5200,4]]},
+{id:3,name:"Cloud Nest Resort",loc:"Nilachal",from:5600,rating:4.7,rev:211,hue:190,fac:["Wi-Fi","Restaurant","Pool","Trekking guide","Parking"],food:"Buffet breakfast",cancel:"30% fee, free before 10 days",rooms:[["Premium Deluxe",5600,2],["Cloud Suite",7400,3]]},
+{id:4,name:"Shoilo Prapat Inn",loc:"Shoilo Prapat",from:1500,rating:3.9,rev:54,hue:130,fac:["Wi-Fi","Parking"],food:"Order on request",cancel:"No refund after 48 hours",rooms:[["Budget Room",1500,2],["Twin Room",2400,2]]},
+{id:5,name:"Golden Peak Luxury Lodge",loc:"Chimbuk Hill",from:9800,rating:4.8,rev:173,hue:200,fac:["Wi-Fi","Restaurant","Pool","Bonfire","Trekking guide","Parking"],food:"Full board option",cancel:"30% fee, free before 14 days",rooms:[["Valley Suite",9800,2],["Peak Villa",14500,5]]},
+{id:6,name:"Tribal Weave Eco Stay",loc:"Boliparha",from:3400,rating:4.2,rev:77,hue:140,fac:["Restaurant","Bonfire","Trekking guide"],food:"Local cuisine",cancel:"20% fee",rooms:[["Bamboo Hut",3400,2],["Hilltop Hut",4600,3]]}
+];
+const CATS=[["Budget",1000,3000],["Standard",3000,5000],["Premium",5000,8000],["Luxury",8000,1e9]];
+const catOf=p=>p<3000?"Budget":p<5000?"Standard":p<8000?"Premium":"Luxury";
+const S={view:"home",id:null,cat:null,maxp:20000,minr:0,fac:[],q:"",sort:"rec",cmp:[],fav:[],role:"tourist",bookings:[
+{ref:"BRH-1042",resort:"Cloud Nest Resort",dates:"12–14 Dec",amt:11200,st:"Confirmed"},
+{ref:"BRH-0977",resort:"Meghla Hill View",dates:"02–03 Oct",amt:2200,st:"Cancelled"}]};
+const $=s=>document.querySelector(s);
+const scene=h=>`<svg viewBox="0 0 300 150" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="300" height="150" fill="hsl(${h},35%,78%)"/><circle cx="240" cy="35" r="16" fill="hsl(45,80%,85%)"/><path d="M0 110 L60 55 L110 100 L170 40 L240 105 L300 70 V150 H0Z" fill="hsl(${h},30%,45%)"/><path d="M0 130 L80 85 L150 125 L220 90 L300 130 V150 H0Z" fill="hsl(${h},35%,28%)"/></svg>`;
+function toast(t){const e=$("#toast");e.textContent=t;e.style.display="block";setTimeout(()=>e.style.display="none",2400)}
+function go(v,id){S.view=v;if(id)S.id=id;render();window.scrollTo(0,0)}
+function card(r){const on=S.cmp.includes(r.id),f=S.fav.includes(r.id);
+return `<article class="card"><div class="ph">${scene(r.hue)}<button class="fav" data-fav="${r.id}" aria-label="${f?"Remove from":"Add to"} wishlist">${f?"♥":"♡"}</button></div>
+<div class="body"><div class="row"><h3 style="margin:0">${r.name}</h3><span class="tag">${catOf(r.from)}</span></div>
+<span class="muted">${r.loc}, Bandarban</span><span>★ ${r.rating} <span class="muted">(${r.rev} reviews)</span></span>
+<div class="chips">${r.fac.slice(0,3).map(x=>`<span>${x}</span>`).join("")}</div>
+<div class="row" style="margin-top:auto"><span class="price">From ${BDT(r.from)}<small class="muted"> /night</small></span></div>
+<div class="row"><button class="btn" data-open="${r.id}">View details</button><label class="chk" style="display:flex;flex-direction:row;align-items:center;gap:6px"><input type="checkbox" data-cmp="${r.id}" ${on?"checked":""}> Compare</label></div></div></article>`}
+function home(){const top=[...R].sort((a,b)=>b.rating-a.rating).slice(0,3);
+return `<div class="hero"><div class="wrap"><h1>Find your place in the Bandarban hills.</h1><p>Compare every resort by budget, room quality and mountain view, then book with a clear refund policy.</p></div>
+<svg viewBox="0 0 1200 150" preserveAspectRatio="none" aria-hidden="true"><path d="M0 150V90L140 40 260 95 420 20 560 90 720 35 880 100 1040 45 1200 90V150Z" fill="#F8F7F2" opacity=".35"/><path d="M0 150V120L180 70 320 115 520 60 700 120 900 75 1060 120 1200 95V150Z" fill="#F8F7F2"/></svg></div>
+<div class="wrap"><form class="search" id="sform" onsubmit="return false"><label>Search resort or area<input id="q" placeholder="e.g. Nilgiri"></label>
+<label>Check-in<input type="date" id="ci"></label><label>Check-out<input type="date" id="co"></label>
+<label>Guests<input type="number" id="gu" min="1" max="12" value="2"></label>
+<label>Budget<select id="bud"><option value="">Any budget</option>${CATS.map((c,i)=>`<option value="${i}">${c[0]} (${BDT(c[1])}${c[2]>1e8?"+":"–"+BDT(c[2])})</option>`).join("")}</select></label>
+<button class="btn" id="sgo">Search resorts</button></form></div>
+<section><div class="wrap"><h2>Pick a budget</h2><div class="cats">${CATS.map(c=>`<button class="cat" data-cat="${c[0]}"><b>${c[0]}</b>${BDT(c[1])}${c[2]>1e8?"+":"–"+BDT(c[2])}</button>`).join("")}</div></div></section>
+<section style="padding-top:0"><div class="wrap"><div class="row"><h2>Top-rated resorts</h2><button class="btn alt" data-go="explore">See all resorts</button></div><div class="grid">${top.map(card).join("")}</div></div></section>
+<section style="background:var(--sage)"><div class="wrap"><h2>How booking works</h2><div class="cats">
+<div><h3>Search and compare</h3><p>Filter by price, facilities and rating, then compare resorts side by side.</p></div>
+<div><h3>See the rules first</h3><p>Advance amount, cancellation fee and refund are shown before you pay.</p></div>
+<div><h3>Pay an advance</h3><p>Confirm with a small advance and get your booking reference instantly.</p></div></div></div></section>`}
+function filtered(){let l=R.filter(r=>r.from<=S.maxp&&r.rating>=S.minr&&(!S.cat||catOf(r.from)===S.cat)&&S.fac.every(f=>r.fac.includes(f))&&(r.name+r.loc).toLowerCase().includes(S.q.toLowerCase()));
+if(S.sort==="lo")l.sort((a,b)=>a.from-b.from);if(S.sort==="hi")l.sort((a,b)=>b.from-a.from);if(S.sort==="rt")l.sort((a,b)=>b.rating-a.rating);return l}
+function explore(){return `<section><div class="wrap"><h2>Explore resorts</h2><div class="layout"><aside class="filters" aria-label="Filters">
+<label>Search<input id="fq" value="${S.q}" placeholder="Name or area"></label>
+<label>Category<select id="fcat"><option value="">All</option>${CATS.map(c=>`<option ${S.cat===c[0]?"selected":""}>${c[0]}</option>`).join("")}</select></label>
+<label>Max price: <b id="mpv">${BDT(S.maxp)}</b><input type="range" id="fmax" min="1000" max="20000" step="500" value="${S.maxp}"></label>
+<label>Minimum rating<select id="frt">${[0,3.5,4,4.5].map(v=>`<option value="${v}" ${S.minr==v?"selected":""}>${v?v+"+":"Any"}</option>`).join("")}</select></label>
+<fieldset style="border:0;padding:0;margin:0;display:grid;gap:6px"><legend class="muted" style="font-size:.85rem;padding:0 0 4px">Facilities</legend>${FAC.map(f=>`<label class="chk"><input type="checkbox" data-fac="${f}" ${S.fac.includes(f)?"checked":""}> ${f}</label>`).join("")}</fieldset>
+<label>Sort by<select id="fsort"><option value="rec">Recommended</option><option value="lo" ${S.sort=="lo"?"selected":""}>Price: low to high</option><option value="hi" ${S.sort=="hi"?"selected":""}>Price: high to low</option><option value="rt" ${S.sort=="rt"?"selected":""}>Rating</option></select></label></aside>
+<div><p class="muted" id="cnt"></p><div class="grid" id="list"></div></div></div></div></section>`}
+function listFill(){const l=filtered();$("#cnt").textContent=l.length+" resort"+(l.length==1?"":"s")+" found";
+$("#list").innerHTML=l.length?l.map(card).join(""):`<p>No resorts match these filters. Raise the maximum price or remove a facility.</p>`}
+function detail(){const r=R.find(x=>x.id===S.id);
+return `<section><div class="wrap"><button class="btn alt" data-go="explore">Back to resorts</button>
+<div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr));margin:18px 0;border-radius:14px;overflow:hidden">${[r.hue,r.hue+20,r.hue-15].map(h=>`<div class="ph" style="height:210px">${scene(h)}</div>`).join("")}</div>
+<div class="row"><div><h1 style="font-size:2.2rem">${r.name}</h1><p class="muted">${r.loc}, Bandarban · ★ ${r.rating} (${r.rev} reviews)</p></div><span class="tag">${catOf(r.from)}</span></div>
+<h3>Facilities</h3><div class="chips">${r.fac.map(x=>`<span>${x}</span>`).join("")}</div>
+<p><b>Food:</b> ${r.food}<br><b>Cancellation:</b> ${r.cancel}</p>
+<h2 style="margin-top:28px">Rooms</h2><div class="grid">${r.rooms.map((m,i)=>`<div class="card"><div class="ph" style="height:120px">${scene(r.hue+i*12)}</div><div class="body"><h3 style="margin:0">${m[0]}</h3><span class="muted">Up to ${m[2]} guests · Balcony and hill view</span><span class="tag" style="width:fit-content">Available</span><div class="row"><span class="price">${BDT(m[1])}<small class="muted"> /night</small></span><button class="btn" data-book="${r.id}:${i}">Book this room</button></div></div></div>`).join("")}</div>
+<h2 style="margin-top:28px">Location</h2><div class="card" style="padding:40px;text-align:center" class="muted">Map placeholder. Embed Google Maps for ${r.loc} here.</div></div></section>`}
+function compare(){const l=S.cmp.map(i=>R.find(r=>r.id===i));
+if(l.length<2)return `<section><div class="wrap"><h2>Compare resorts</h2><p>Select at least two resorts with the Compare checkbox on any resort card.</p><button class="btn" data-go="explore">Choose resorts</button></div></section>`;
+const rows=[["Starting price",r=>BDT(r.from)],["Category",r=>catOf(r.from)],["Rating",r=>"★ "+r.rating],["Location",r=>r.loc],["Food",r=>r.food],["Facilities",r=>r.fac.join(", ")],["Cancellation",r=>r.cancel]];
+return `<section><div class="wrap"><h2>Compare resorts</h2><div class="tablewrap"><table><thead><tr><th></th>${l.map(r=>`<th>${r.name}</th>`).join("")}</tr></thead><tbody>${rows.map(w=>`<tr><th scope="row">${w[0]}</th>${l.map(r=>`<td>${w[1](r)}</td>`).join("")}</tr>`).join("")}<tr><th scope="row"></th>${l.map(r=>`<td><button class="btn" data-open="${r.id}">View rooms</button></td>`).join("")}</tr></tbody></table></div></div></section>`}
+function dash(){const t={tourist:["My bookings","Wishlist","Reviews"],owner:["Rooms","Prices","Availability"],admin:["Resort verification","Payments","Refunds"]};
+const body={tourist:`<h3>Booking history</h3><div class="tablewrap"><table><tr><th>Ref</th><th>Resort</th><th>Dates</th><th>Advance</th><th>Status</th><th></th></tr>${S.bookings.map((b,i)=>`<tr><td>${b.ref}</td><td>${b.resort}</td><td>${b.dates}</td><td>${BDT(b.amt)}</td><td>${b.st}</td><td>${b.st=="Confirmed"?`<button class="btn alt" data-cancel="${i}">Cancel</button>`:""}</td></tr>`).join("")}</table></div><h3 style="margin-top:20px">Wishlist</h3><p>${S.fav.length?S.fav.map(i=>R.find(r=>r.id==i).name).join(", "):"No saved resorts yet. Tap the heart on any resort."}</p>`,
+owner:`<h3>Room and price management</h3><div class="tablewrap"><table><tr><th>Room</th><th>Price / night</th><th>Available</th></tr>${R[2].rooms.map(m=>`<tr><td>${m[0]}</td><td><input value="${m[1]}" style="width:100px"></td><td><select><option>Open</option><option>Blocked</option></select></td></tr>`).join("")}</table></div><p><button class="btn" onclick="toast('Changes saved')">Save changes</button></p>`,
+admin:`<h3>Pending resort verification</h3><div class="tablewrap"><table><tr><th>Resort</th><th>Owner</th><th>Status</th><th></th></tr><tr><td>Hill Whisper Cottage</td><td>R. Chakma</td><td>Pending</td><td><button class="btn" onclick="toast('Resort approved')">Approve</button></td></tr></table></div><h3 style="margin-top:20px">Refund requests</h3><div class="tablewrap"><table><tr><th>Ref</th><th>Refund</th><th></th></tr><tr><td>BRH-0977</td><td>${BDT(1760)}</td><td><button class="btn" onclick="toast('Refund processed')">Process refund</button></td></tr></table></div>`};
+return `<section><div class="wrap"><h2>Dashboards</h2><div class="tabs">${[["tourist","Tourist"],["owner","Resort owner"],["admin","Administrator"]].map(x=>`<button data-role="${x[0]}" aria-pressed="${S.role==x[0]}">${x[1]}</button>`).join("")}</div><p class="muted">Sections: ${t[S.role].join(", ")}</p>${body[S.role]}</div></section>`}
+function about(){return `<section><div class="wrap" style="max-width:720px"><h2>About us</h2><p>Bandarban Resort Hub brings the resorts of Bandarban into one place so tourists can compare prices, rooms and views without messaging each resort separately.</p><p>Listings, prices, photos and availability are maintained by participating resort owners.</p><h2>Contact us</h2><div class="card"><div class="body"><label>Name<input></label><label>Email<input type="email"></label><label>Message<input></label><button class="btn" onclick="toast('Message sent')">Send message</button></div></div></div></section>`}
+function render(){const v=S.view;$("#app").innerHTML=({home,explore,detail,compare,dash,about})[v]();
+document.querySelectorAll("nav .l").forEach(b=>b.setAttribute("aria-current",b.dataset.go===(v=="detail"?"explore":v)));
+if(v=="explore")listFill();cbar()}
+function cbar(){const b=$("#cbar");b.classList.toggle("on",S.cmp.length>0&&S.view!="compare");$("#ccount").textContent=S.cmp.length+" resort"+(S.cmp.length>1?"s":"")+" selected"}
+function book(rid,ri){const r=R.find(x=>x.id==rid),m=r.rooms[ri];
+$("#sheet").innerHTML=`<h2 style="margin:0">Book ${m[0]}</h2><span class="muted">${r.name}</span>
+<label>Full name<input id="bn"></label><label>Phone<input id="bp" type="tel"></label>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><label>Check-in<input type="date" id="b1"></label><label>Check-out<input type="date" id="b2"></label></div>
+<label>Guests<input type="number" id="bg" min="1" max="${m[2]}" value="1"></label>
+<div class="sum" id="bsum"></div><p class="warn" style="font-size:.9rem;margin:0">Cancellation policy: ${r.cancel}. This fee is deducted from your advance if you cancel.</p>
+<div class="row"><button class="btn alt" id="bx">Close</button><button class="btn" id="bpay" disabled>Pay advance and confirm</button></div>`;
+$("#modal").classList.add("on");
+const upd=()=>{const a=new Date($("#b1").value),b=new Date($("#co")?.value||$("#b2").value),n=Math.round((b-a)/864e5),ok=n>0&&$("#bn").value&&$("#bp").value;
+const tot=n>0?n*m[1]:0,adv=Math.round(tot*.3),fee=Math.round(adv*.2);
+$("#bsum").innerHTML=n>0?`<div class="row"><span>${n} night${n>1?"s":""} × ${BDT(m[1])}</span><b>${BDT(tot)}</b></div><div class="row"><span>Advance now (30%)</span><b>${BDT(adv)}</b></div><div class="row"><span>Cancellation fee (20% of advance)</span><b>${BDT(fee)}</b></div><div class="row"><span>Refund if cancelled</span><b>${BDT(adv-fee)}</b></div>`:`<span class="muted">Choose valid dates to see your total.</span>`;
+$("#bpay").disabled=!ok;$("#bpay").dataset.tot=adv;};
+["bn","bp","b1","b2","bg"].forEach(i=>$("#"+i).oninput=upd);upd();
+$("#bx").onclick=()=>$("#modal").classList.remove("on");
+$("#bpay").onclick=()=>{const ref="BRH-"+(1100+S.bookings.length);S.bookings.unshift({ref,resort:r.name,dates:$("#b1").value+" → "+$("#b2").value,amt:+$("#bpay").dataset.tot,st:"Confirmed"});$("#modal").classList.remove("on");toast("Booking confirmed: "+ref);go("dash");S.role="tourist";render()}}
+document.addEventListener("click",e=>{const t=e.target.closest("button,input");if(!t)return;const d=t.dataset;
+if(d.go)go(d.go);else if(d.open)go("detail",+d.open);else if(d.book){const[a,b]=d.book.split(":");book(a,+b)}
+else if(d.cat){S.cat=S.cat===d.cat?null:d.cat;go("explore")}
+else if(d.fav){const i=+d.fav;S.fav=S.fav.includes(i)?S.fav.filter(x=>x!=i):[...S.fav,i];render()}
+else if(d.role){S.role=d.role;render()}
+else if(d.cancel){const b=S.bookings[+d.cancel],fee=Math.round(b.amt*.2);if(confirm(`Cancel ${b.ref}? Fee ${BDT(fee)}, refund ${BDT(b.amt-fee)}.`)){b.st="Cancelled";toast("Cancelled. Refund: "+BDT(b.amt-fee));render()}}
+else if(t.id==="cclear"){S.cmp=[];render()}
+else if(t.id==="sgo"){S.q=$("#q").value;const b=$("#bud").value;S.cat=b?CATS[b][0]:null;go("explore")}
+else if(d.cmp){const i=+d.cmp;if(t.checked){if(S.cmp.length>=3){t.checked=false;toast("Compare up to 3 resorts");return}S.cmp.push(i)}else S.cmp=S.cmp.filter(x=>x!=i);cbar()}
+else if(d.fac){S.fac=t.checked?[...S.fac,d.fac]:S.fac.filter(x=>x!=d.fac);listFill()}});
+document.addEventListener("input",e=>{const i=e.target.id;
+if(i==="fq"){S.q=e.target.value;listFill()}else if(i==="fmax"){S.maxp=+e.target.value;$("#mpv").textContent=BDT(S.maxp);listFill()}
+else if(i==="frt"){S.minr=+e.target.value;listFill()}else if(i==="fcat"){S.cat=e.target.value||null;listFill()}else if(i==="fsort"){S.sort=e.target.value;listFill()}});
+$("#modal").addEventListener("click",e=>{if(e.target.id==="modal")e.target.classList.remove("on")});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")$("#modal").classList.remove("on")});
+render();
+</script>
+</body>
+</html>
